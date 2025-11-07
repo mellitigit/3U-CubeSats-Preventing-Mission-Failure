@@ -1,0 +1,4 @@
+filename,data_type,original_size_MB,compressed_size_MB,saved_MB,compression_ratio,output_file,timestamp
+1.jpg,image,0.268,0.097,0.172,0.361,test_files/1.jpg_compressed.jpg,2025-11-06T14:40:17.358599Z
+telemetry.csv,telemetry,0.057,0.0,0.057,0.006,test_files/telemetry.csv.lz4,2025-11-06T14:40:36.816632Z
+log.txt,telemetry,1.105,0.148,0.957,0.134,test_files/log.txt.lz4,2025-11-06T14:40:59.126065Z
