@@ -18,26 +18,27 @@ voltage = [volt_base]
 current = [curr_base]
 
 # -----------------------
-# Generate synthetic time-series
+# Generate synthetic time-series (realistic ranges)
 # -----------------------
 for i in range(1, n_samples):
-    # Temperature trend + noise
-    temp_change = np.random.normal(0, 0.05) + 0.001*(i)   # slow upward trend
-    temperature.append(temperature[-1] + temp_change)
-    
-    # Voltage decay (discharge) + noise
-    volt_change = -0.0005 + np.random.normal(0, 0.001)
-    voltage.append(voltage[-1] + volt_change)
-    
-    # Current fluctuation
-    curr_change = np.random.normal(0, 0.01)
-    current.append(max(0, current[-1] + curr_change))  # current can't be negative
+    # Temperature: slow oscillation + noise
+    temp_trend = 25 + 10 * np.sin(i / 200)  # periodic variation
+    temp_noise = np.random.normal(0, 0.2)
+    temperature.append(np.clip(temp_trend + temp_noise, 20, 60))  # clamp range
+
+    # Voltage: gradual discharge with random noise
+    volt_change = -0.0005 + np.random.normal(0, 0.0005)
+    voltage.append(np.clip(voltage[-1] + volt_change, 3.0, 4.2))
+
+    # Current: small fluctuations within operational limits
+    curr_change = np.random.normal(0, 0.02)
+    current.append(np.clip(current[-1] + curr_change, 0.1, 2.0))
 
 # -----------------------
 # Create DataFrame
 # -----------------------
 df = pd.DataFrame({
-    'timestamp': np.arange(n_samples)*dt,
+    'timestamp': np.arange(n_samples) * dt,
     'temperature': temperature,
     'voltage': voltage,
     'current': current
@@ -65,5 +66,5 @@ df = df[:-1]
 # Save to CSV
 # -----------------------
 df.to_csv('synthetic_battery_prediction_data.csv', index=False)
-print("Data generated successfully! Here's a preview:")
+print("✅ Realistic data generated successfully! Here's a preview:")
 print(df.head())
