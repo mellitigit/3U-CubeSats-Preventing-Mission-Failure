@@ -2,44 +2,153 @@
 
 ---
 
-## **1. Summary**
+## ✅ Table of Contents
 
-CubeSats operate in harsh space environments where communication delays, limited bandwidth, and long blackout periods make real-time ground intervention impossible. This project proposes an autonomous AI-driven system capable of detecting anomalies, managing power, and maintaining stability without human input. By combining advanced fault detection, predictive models, reinforcement learning control, and adaptive onboard decision-making, the solution ensures continuous, reliable CubeSat operation and prevents mission-critical failures.
-
----
-
-## **2. Problematic**  
-
-CubeSats operate in highly constrained and unpredictable environments where communication delays, limited bandwidth, and blackouts make ground intervention ineffective. Minor anomalies such as thermal imbalances or battery degradation can escalate into mission-threatening failures. Traditional FDIR systems struggle to provide timely responses and often misinterpret real faults as sensor noise.
-
-Unpredictable power variations further complicate operations, as poor forecasting can shut down subsystems. Limited downlink bandwidth restricts data transmission, requiring intelligent compression. Uncontrolled tumbling threatens communication stability. These combined challenges demand advanced onboard intelligence capable of autonomous real-time fault detection, resource management, detumbling control, and stabilization — without relying on ground control.
-
----
-
-# **3. Solution**
+1. [Summary](#1-summary)  
+2. [Problematic](#2-problematic)  
+3. [Solution Overview](#4-solution-overview)  
+4. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
+5. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
+6. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
+7. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
+8. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)  
+9. [Features (Schema Electric, Workflow)](#42-features)  
+10. [Impact](#43-impact)
 
 ---
 
-## **3.1 Overview**
+# **1. Summary**
 
-Below are the five autonomous intelligence modules developed to enhance CubeSat resilience and mission success.
+CubeSats operate in harsh space environments where communication delays, limited bandwidth, and long blackout periods make real-time ground intervention impossible. This project proposes an autonomous AI-driven system capable of detecting anomalies, managing power, stabilizing attitude, and maintaining communication reliability without human input. By combining fault detection, predictive modeling, reinforcement learning control, and adaptive onboard decision-making, the system ensures continuous, reliable CubeSat operation and mitigates mission-critical failures.
+
+---
+
+# **2. Problematic**  
+*(Hejer — updated 09/11/2025 with Eya’s contribution)*
+
+CubeSats operate in highly constrained and unpredictable space environments where communication delays, limited bandwidth, and blackouts make ground intervention ineffective. Minor anomalies such as thermal imbalances, battery degradation, or attitude instabilities can rapidly escalate into mission-threatening failures. Traditional FDIR systems struggle to react promptly and often misinterpret subsystem faults as sensor errors.
+
+Unpredictable variations in power generation and consumption create additional risks, as poor power forecasting can lead to payload shutdowns or brownouts. Limited bandwidth further complicates data transmission, requiring intelligent compression systems. Finally, tumbling after deployment or external disturbances affects communication stability and energy harvesting.
+
+These challenges highlight the need for **advanced onboard autonomy** for real-time fault detection, predictive resource management, efficient communication, and attitude stabilization — without relying on ground stations.
+
+---
+
+# **4. Solution Overview**
+
+This CubeSat system integrates **five AI-based objectives**:
+
+1. **Downlink Prediction & Adaptive Compression**  
+2. **Power Prediction & Energy Scheduling**  
+3. **Battery Health Prediction (Thermal & Electrical)**  
+4. **FDIR — Fault Detection, Isolation & Recovery**  
+5. **Detumbling & Attitude Stabilization using Reinforcement Learning**
+
+Each subsystem is independent yet complementary to enable a fully autonomous CubeSat mission.
 
 ---
 
 # ✅ **Objective 1: CubeSat AI-Based Downlink Prediction & Adaptive Compression**
 
-This system predicts **available downlink capacity** for each pass and computes the required **compression ratio** to ensure the full payload is deliverable.
+This AI system predicts **available downlink capacity** for each pass and computes the **compression ratio** required to send the full payload under real constraints.
 
-### ✅ Highlights
-- XGBoost-based prediction  
-- Autonomous bandwidth management  
-- Intelligent compression selection  
-- Works under SNR/weather geometry challenges  
+---
 
-### ✅ How to Run
+## ✅ Objective
+
+- Predict maximum transmittable bytes per pass  
+- Predict whether full payload can be sent  
+- Compute optimal compression ratio  
+- Enable fully autonomous onboard transmission  
+- Maintain reliability under bad SNR, weather, geometry  
+
+---
+
+## ✅ System Overview
+
+### **Dataset Generation (Simulation)**  
+Synthetic datasets model:
+
+- Orbital pass geometry  
+- Free-space path loss  
+- Rain attenuation  
+- Antenna mispointing  
+- SNR fluctuations  
+- Payload sizes  
+- Environmental conditions  
+
+### **Generated Files**
+
+| File | Description |
+|------|-------------|
+| aggregated_passes.csv | Main dataset (50k passes). |
+| timeseries_passes_profiles.csv | Time-series SNR/range/elevation. |
+| timeseries_passes_meta.csv | Metadata for time-series passes. |
+| ts_features.csv | Extracted SNR statistics. |
+| aggregated_passes_enriched.csv | Final enriched dataset. |
+
+---
+
+## ✅ XGBoost Model
+
+### Inputs
+- Pass geometry  
+- Link-budget parameters  
+- Antenna gains  
+- Battery & PA temperature  
+- SNR history  
+- Time-series statistical features  
+
+### Outputs
+- `can_send_all`  
+- `recommended_compression_ratio`
+
+---
+
+## ✅ Onboard Compression Logic
+
+### ✅ If data fits → **Transmit all**  
+### ✅ If not → **Compress based on recommended protocol**
+
+| Data Type | Extensions | Protocol |
+|-----------|------------|----------|
+| Images | .jpg .png .tif | jpeg / jpeg2000 |
+| Telemetry | .csv .txt | lz4 |
+| Science/Binary | .bin .dat | zstd / CCSDS121 |
+| Video | — | h264 |
+
+---
+
+## ✅ How to Run
+
+### Train model
 python train_XGBoost.py
 
+
+### Run full decision pipeline
 python send_with_compressing.py
+
+
+---
+
+## ✅ Repository Structure
+
+/data_generation/
+data_generation.py
+extract_ts_features.py
+merge_ts_into_aggregated.py
+
+/models/
+train_XGBoost.py
+tinyml_conversion.py
+send_with_compressing.py
+
+/datasets/
+aggregated_passes.csv
+timeseries_passes_profiles.csv
+timeseries_passes_meta.csv
+ts_features.csv
+aggregated_passes_enriched.csv
 
 
 
@@ -47,62 +156,172 @@ python send_with_compressing.py
 
 # ✅ **Objective 2: CubeSat Power Prediction Model**
 
-Predicts **power availability at T+12 minutes** to optimize onboard power allocation.
+Predicts **T+12 min power availability** to secure payload operations and energy safety.
 
-### ✅ Highlights
-- XGBoost model  
-- Sequential SoC simulation  
-- Rolling statistics + engineered features  
-- Avoids brownouts & unsafe discharge  
+---
 
-### ✅ How to Run
-python generate_enhanced_data.py
+## ✅ Objective 
 
-python train_optimized_model.py
+Predict net available power (W) at future time to:
 
-python test_single_prediction.py
+- Prevent brownouts  
+- Optimize payload scheduling  
+- Maintain safe energy margins  
+
+---
+
+## ✅ Technical Stack
+
+Python, XGBoost, Scikit-learn, Pandas, NumPy, Joblib, Matplotlib.
+
+---
+
+## ✅ Workflow Overview
+
+### **1. Data Simulation**
+`generate_enhanced_data.py`
+- Sequential SoC behavior  
+- Rolling mean/std  
+- Interaction features  
+
+Output: `sim_power_data_enhanced.csv`
+
+### **2. Training**
+`train_optimized_model.py`
+- RandomizedSearchCV  
+- Trains final model  
+- Outputs:
+  - `xgboost_power_predictor_optimized.pkl`
+  - `prediction_comparison.csv`
+
+### **3. Inference**
+`test_single_prediction.py`
+- Predicts real scenario for validation  
+
+---
+
+## ✅ Repository Structure
+/generated_data/
+sim_power_data_enhanced.csv
+prediction_comparison.csv
+
+generate_enhanced_data.py
+train_optimized_model.py
+test_single_prediction.py
+xgboost_power_predictor_optimized.pkl
 
 
 
 ---
 
-# ✅ **Objective 3: CubeSat Battery Health Prediction (GRU Model)**
+# ✅ **Objective 3: CubeSat Battery Health Prediction Model**
 
-GRU-based neural network predicting:  
-✅ Temperature_next  
-✅ Voltage_next  
-✅ Current_next  
+---
 
-### ✅ Highlights
-- 10-step time series  
-- 7 engineered features  
-- Lightweight, overfitting-resistant  
-- High R² performance  
+## ✅ Objective
 
-### ✅ How to Run
-python generate_data_prediction.py
+Predict next-step battery:
+- Temperature  
+- Voltage  
+- Current  
+
+Using last 10 time steps of telemetry.
+
+---
+
+## ✅ Model Overview
+
+- GRU  
+- 7 Input features  
+- 3 Output targets  
+- 48 hidden units  
+- 2 GRU layers  
+- Dropout + weight decay  
+- MSE loss, Adam optimizer  
+- ~23k parameters  
+
+---
+
+## ✅ Performance
+
+| Metric | Temperature | Voltage | Current |
+|--------|-------------|---------|---------|
+| RMSE | 0.73°C | 0.047 V | 0.054 A |
+| R² | High | High | High |
+
+---
+
+## ✅ Repository Structure
+
+/prediction temp and volt/
+train_gru_model.ipynb
+generate_data_prediction.py
+synthetic_battery_prediction_data.csv
+best_gru_model.pth
+battery_gru_model.pth
+scaler_X_gru.pkl
+scaler_y_gru.pkl
+model_params_gru.pkl
+requirements.txt
+
 
 
 ---
 
 # ✅ **Objective 4: AI-Based FDIR (Fault Detection, Isolation & Recovery)**
 
-Two LightGBM models for real-time fault detection & subsystem isolation.
+---
 
-### ✅ Highlights
-- Fault detection accuracy: **95%**  
-- Fault isolation accuracy: **95.75%**  
-- Sliding window preprocessing  
-- Works on synthetic sensor datasets  
+## ✅ Objective
 
-### ✅ How to Run
-python generate_sensor_dataset.py
+Enable CubeSats to autonomously:
 
-python train_fault_detection.py 
+1. Detect anomalies  
+2. Identify faulty subsystem  
+3. Trigger appropriate recovery actions  
 
-python train_fault_isolation.py 
+---
 
-python fdir_inference.py
+## ✅ Models
+
+### 1️⃣ Fault Detection (Binary)
+- LightGBM  
+- Accuracy: **95%**
+
+### 2️⃣ Fault Isolation (Multiclass)
+- LightGBM  
+- Accuracy: **95.75%**
+
+---
+
+## ✅ Dataset & Sensors
+
+Simulated sensor data includes:
+- Gyroscope, Accelerometer, Magnetometer  
+- Battery voltage/current  
+- Solar panel sensors  
+- Internal temperatures  
+- Light sensor  
+- ADC  
+- BMP pressure  
+
+Fault classes include sensor and subsystem deviations.
+
+Sliding windows of **10 samples** capture dynamic behavior.
+
+---
+
+## ✅ Repository Structure
+
+/fdir/
+  /dataset/
+      sensor_data.csv
+      sensor_windows.npy
+      labels.npy
+
+  /models/
+      fault_detection_model.pkl
+      fault_isolation_model.pkl
 
 
 
@@ -110,25 +329,35 @@ python fdir_inference.py
 
 # ✅ **Objective 5: Detumbling using Reinforcement Learning**
 
-This module stabilizes a tumbling CubeSat using **supervised learning + reinforcement learning**.
+This module stabilizes CubeSat attitude by combining:
 
-### ✅ Summary (Short Version)
+- ✅ A supervised **tumbling detector model**  
+- ✅ An **RL agent (Soft Actor-Critic)** controlling torques  
+- ✅ A custom **Gym environment** modeling CubeSat rotational dynamics  
 
-The system first detects tumbling using a **neural network classifier**, then uses a **Soft Actor-Critic (SAC)** reinforcement learning agent trained in a custom CubeSat attitude dynamics environment to reduce angular velocity and stabilize the satellite. The RL agent learns an optimal torque control policy that minimizes energy consumption while detumbling the CubeSat efficiently.
+The goal is to reduce angular speed using minimal energy.
 
-### ✅ How to Run
+---
+
+## ✅ How to Run
+
+### Install requirements
 pip install -r requirements.txt
 
 
-**Train detector model:**  
+
+### Train disturbance detector
 Run `cubesat.ipynb`  
-→ Saves `model_supervised.keras`
+→ saves `model_supervised.keras`
 
-**Train RL agent:**  
+### Train RL detumbling agent
 Run `rl-cubesat.ipynb`  
-→ Saves `sac_cubesat_policy.zip`
+→ saves `sac_cubesat_policy.zip`
 
-### ✅ Repository Structure
+---
+
+## ✅ Repository Structure
+
 /cubesat-rl/
 cubesat.ipynb
 rl-cubesat.ipynb
@@ -142,28 +371,26 @@ training_curves.png
 evaluation_results.png
 
 
----
-
-## **3.2 Features**
-*(Schema electric, workflow diagram, workflow description — TO BE ADDED)*
 
 ---
 
-## **3.3 Impact** 
-
-The proposed objectives collectively enhance the autonomy, reliability, and longevity of CubeSat missions. The battery and power prediction systems prevent overheating and energy depletion, ensuring safe long-term operation. The AI-based FDIR provides rapid onboard detection and isolation of faults, reducing downtime and preventing mission-critical failures.
-
-The adaptive compression and link prediction module significantly improves communication efficiency under limited bandwidth. Finally, the reinforcement learning–based detumbling controller ensures stable orientation and communication quality immediately after deployment or disturbances.
-
-Together, these advancements enable resilient, long-duration CubeSat missions capable of operating fully autonomously without relying on ground control.
+# **4.2 Features**
+*(Schema electric, workflow diagram, workflow description — to be added)*
 
 ---
-## **4. Budget **  
----
-## **5. Commercial **  
 
+# **4.3 Impact**
+
+The system enhances CubeSat autonomy, reliability, and mission longevity.  
+Power and battery prediction prevent energy failures.  
+The FDIR system minimizes mission downtime.  
+The downlink compression module maximizes data return under real bandwidth limits.  
+Reinforcement learning detumbling ensures stabilization after deployment.  
+
+Together, these advancements create a fully autonomous CubeSat capable of surviving long-duration missions without dependence on ground control.
+
+---
 
 # ✅ END OF README ✅
-
 
 
