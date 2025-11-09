@@ -132,35 +132,30 @@ python send_with_compressing.py
 ## ✅ Repository Structure
 
 3U-CubeSats-Preventing-Mission-Failure/
-│
 └── Data compressing/
-    ├── __pycache__/                      # Compiled Python files
-    │
-    ├── compressed_files/                 # Directory containing compressed outputs
-    ├── generated_dataset/                # Folder for generated or preprocessed data
-    ├── test_files/                       # Test data and sample input files
-    │
-    ├── compressed_files.csv              # Log or metadata file for compressed outputs
-    │
-    ├── compression_engine.py             # Core compression algorithms
-    ├── compression_selector.py           # Chooses appropriate compression technique
-    ├── compression_settings.py           # Compression configuration and parameter tuning
-    ├── compressor.py                     # High-level interface for running compression
-    │
-    ├── data_classifier.py                # Classifies data type before compression
-    ├── data_generation.py                # Script for generating synthetic datasets
-    ├── extract_ts_features.py            # Extracts time-series features for model input
-    ├── merge_ts_into_aggregated.py       # Merges and aggregates time-series data
-    │
-    ├── send_with_compression.py          # Simulates data transmission with compression
-    ├── test.py                           # Script for testing functionality
-    │
-    ├── train_XGBoost.py                  # Model training script (XGBoost)
-    ├── xgboost_can_send_all_model.pkl    # Trained model for data type classification
-    ├── xgboost_recommended_compression_ratio_model.pkl  # Model for predicting compression ratio
-    │
-    └── .gitignore                        # Git ignore file
-
+├── pycache/
+├── compressed_files/
+├── generated_dataset/
+├── test_files/
+│
+├── compressed_files.csv
+│
+├── compression_engine.py
+├── compression_selector.py
+├── compression_settings.py
+├── compressor.py
+│
+├── data_classifier.py
+├── data_generation.py
+├── extract_ts_features.py
+├── merge_ts_into_aggregated.py
+│
+├── send_with_compression.py
+├── test.py
+│
+├── train_XGBoost.py
+├── xgboost_can_send_all_model.pkl
+├── xgboost_recommended_compression_ratio_model.pkl
 ---
 
 # ✅ **Objective 2: CubeSat Power Prediction Model**
