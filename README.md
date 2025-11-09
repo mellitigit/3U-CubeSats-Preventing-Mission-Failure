@@ -156,6 +156,8 @@ python send_with_compressing.py
 ├── train_XGBoost.py
 ├── xgboost_can_send_all_model.pkl
 ├── xgboost_recommended_compression_ratio_model.pkl
+
+
 ---
 
 # ✅ **Objective 2: CubeSat Power Prediction Model**
