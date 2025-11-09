@@ -56,7 +56,6 @@ This AI system predicts **available downlink capacity** for each pass and comput
 
 ## ✅ Objective
 
-- Predict maximum transmittable bytes per pass  
 - Predict whether full payload can be sent  
 - Compute optimal compression ratio  
 - Enable fully autonomous onboard transmission  
@@ -112,10 +111,9 @@ Synthetic datasets model:
 
 | Data Type | Extensions | Protocol |
 |-----------|------------|----------|
-| Images | .jpg .png .tif | jpeg / jpeg2000 |
+| Images | .jpg .png .tif | jpeg  |
 | Telemetry | .csv .txt | lz4 |
-| Science/Binary | .bin .dat | zstd / CCSDS121 |
-| Video | — | h264 |
+| Science/Binary | .bin .dat | zstd |
 
 ---
 
@@ -133,24 +131,35 @@ python send_with_compressing.py
 
 ## ✅ Repository Structure
 
-/data_generation/
-data_generation.py
-extract_ts_features.py
-merge_ts_into_aggregated.py
-
-/models/
-train_XGBoost.py
-tinyml_conversion.py
-send_with_compressing.py
-
-/datasets/
-aggregated_passes.csv
-timeseries_passes_profiles.csv
-timeseries_passes_meta.csv
-ts_features.csv
-aggregated_passes_enriched.csv
-
-
+3U-CubeSats-Preventing-Mission-Failure/
+│
+└── Data compressing/
+    ├── __pycache__/                      # Compiled Python files
+    │
+    ├── compressed_files/                 # Directory containing compressed outputs
+    ├── generated_dataset/                # Folder for generated or preprocessed data
+    ├── test_files/                       # Test data and sample input files
+    │
+    ├── compressed_files.csv              # Log or metadata file for compressed outputs
+    │
+    ├── compression_engine.py             # Core compression algorithms
+    ├── compression_selector.py           # Chooses appropriate compression technique
+    ├── compression_settings.py           # Compression configuration and parameter tuning
+    ├── compressor.py                     # High-level interface for running compression
+    │
+    ├── data_classifier.py                # Classifies data type before compression
+    ├── data_generation.py                # Script for generating synthetic datasets
+    ├── extract_ts_features.py            # Extracts time-series features for model input
+    ├── merge_ts_into_aggregated.py       # Merges and aggregates time-series data
+    │
+    ├── send_with_compression.py          # Simulates data transmission with compression
+    ├── test.py                           # Script for testing functionality
+    │
+    ├── train_XGBoost.py                  # Model training script (XGBoost)
+    ├── xgboost_can_send_all_model.pkl    # Trained model for data type classification
+    ├── xgboost_recommended_compression_ratio_model.pkl  # Model for predicting compression ratio
+    │
+    └── .gitignore                        # Git ignore file
 
 ---
 
