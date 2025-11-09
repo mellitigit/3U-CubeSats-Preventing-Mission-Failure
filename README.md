@@ -57,7 +57,9 @@ Predicts **power availability at T+12 minutes** to optimize onboard power alloca
 
 ### ✅ How to Run
 python generate_enhanced_data.py
+
 python train_optimized_model.py
+
 python test_single_prediction.py
 
 
@@ -79,8 +81,6 @@ GRU-based neural network predicting:
 
 ### ✅ How to Run
 python generate_data_prediction.py
-jupyter notebook train_gru_model.ipynb
-
 
 
 ---
@@ -97,8 +97,11 @@ Two LightGBM models for real-time fault detection & subsystem isolation.
 
 ### ✅ How to Run
 python generate_sensor_dataset.py
-python train_fault_detection.py
-python train_fault_isolation.py
+
+python train_fault_detection.py 
+
+python train_fault_isolation.py 
+
 python fdir_inference.py
 
 
