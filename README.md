@@ -24,7 +24,7 @@ CubeSats operate in harsh space environments where communication delays, limited
 ---
 
 # **2. Problematic**  
-*(Hejer — updated 09/11/2025 with Eya’s contribution)*
+
 
 CubeSats operate in highly constrained and unpredictable space environments where communication delays, limited bandwidth, and blackouts make ground intervention ineffective. Minor anomalies such as thermal imbalances, battery degradation, or attitude instabilities can rapidly escalate into mission-threatening failures. Traditional FDIR systems struggle to react promptly and often misinterpret subsystem faults as sensor errors.
 
@@ -34,7 +34,7 @@ These challenges highlight the need for **advanced onboard autonomy** for real-t
 
 ---
 
-# **4. Solution Overview**
+# **3. Solution Overview**
 
 This CubeSat system integrates **five AI-based objectives**:
 
@@ -374,12 +374,12 @@ evaluation_results.png
 
 ---
 
-# **4.2 Features**
+# **3.2  Hardware/electronics design files**
 *(Schema electric, workflow diagram, workflow description — to be added)*
 
 ---
 
-# **4.3 Impact**
+# **3.3 Impact**
 
 The system enhances CubeSat autonomy, reliability, and mission longevity.  
 Power and battery prediction prevent energy failures.  
