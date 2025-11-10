@@ -33,7 +33,14 @@ Unpredictable variations in power generation and consumption create additional r
 
 These challenges highlight the need for **advanced onboard autonomy** for real-time fault detection, predictive resource management, efficient communication, and attitude stabilization — without relying on ground stations.
 
----
+## Problem & Source
+
+- **Power Disruptions (SEL)** – [NASA / IEEE NSREC 2025](https://ntrs.nasa.gov/citations/20250006685)
+- **CubeSat Communication Subsystems Review** – [Qatar University 2024](https://qspace.qu.edu.qa/bitstream/10576/57787/1/CubeSat_Communication_Subsystems_A_Review_of_On-Board_Transceiver_Architectures_Protocols_and_Performance.pdf)
+- **Survey on CubeSat Electrical Bus Interfaces** – [SpringerLink](https://link.springer.com/article/10.1007/s12567-016-0138-0)
+- **Overheating & Thermal Risks** – [NASA NESC](#)  <!-- Replace # with the actual NASA NESC link when available -->
+- **EPS-related Failures** – [SpringerLink](https://link.springer.com/article/10.1007/s43937-025-00069-5)
+
 
 # **3. Solution Overview**
 
