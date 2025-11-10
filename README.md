@@ -280,7 +280,7 @@ Using last 10 time steps of telemetry.
 
 ## ✅ Repository Structure
 
-
+```
 /prediction temp and volt/
     train_gru_model.ipynb
     generate_data_prediction.py
@@ -291,7 +291,7 @@ Using last 10 time steps of telemetry.
     scaler_y_gru.pkl
     model_params_gru.pkl
     requirements.txt
-
+```
 
 
 
@@ -341,7 +341,7 @@ Sliding windows of **10 samples** capture dynamic behavior.
 ---
 
 ## ✅ Repository Structure
-
+```
 /fdir/
   /dataset/
       sensor_data.csv
@@ -352,7 +352,7 @@ Sliding windows of **10 samples** capture dynamic behavior.
       fault_detection_model.pkl
       fault_isolation_model.pkl
 
-
+```
 
 ---
 
@@ -387,17 +387,19 @@ Run `rl-cubesat.ipynb`
 
 ## ✅ Repository Structure
 
+```
 /cubesat-rl/
-cubesat.ipynb
-rl-cubesat.ipynb
-requirements.txt
-model_supervised.keras
-best_detector_model.keras
-sac_cubesat_policy.zip
-/checkpoints/
-/logs/
-training_curves.png
-evaluation_results.png
+    cubesat.ipynb
+    rl-cubesat.ipynb
+    requirements.txt
+    model_supervised.keras
+    best_detector_model.keras
+    sac_cubesat_policy.zip
+    /checkpoints/
+    /logs/
+    training_curves.png
+    evaluation_results.png
+```
 
 
 
