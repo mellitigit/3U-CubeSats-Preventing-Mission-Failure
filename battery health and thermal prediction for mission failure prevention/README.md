@@ -350,6 +350,48 @@ dropout_rate = 0.3  # Less regularization
 seq_length = 15   # Longer sequences (in Cell 3)
 ```
 
+## ⏱️ Measuring Model Latency
+
+To measure the inference latency (prediction time) of your model, you have two options:
+
+### Option 1: Using the Latency Measurement Script
+
+Run the standalone Python script:
+
+```bash
+python measure_latency.py
+```
+
+This will measure:
+- Single inference latency (1000 runs)
+- Batch inference latency (different batch sizes)
+- Preprocessing time
+- End-to-end latency
+- Real-time feasibility analysis
+
+### Option 2: Adding a Cell to the Notebook
+
+Add the latency measurement cell from `LATENCY_MEASUREMENT_CELL.md` to your notebook after training. This will measure:
+- Mean, median, min, max latency
+- Throughput (predictions per second)
+- Batch performance
+- End-to-end latency including preprocessing
+
+### Understanding Latency Results
+
+- **< 10 ms**: Excellent for real-time applications
+- **10-100 ms**: Good for real-time applications
+- **100-1000 ms**: Acceptable for near-real-time applications
+- **> 1000 ms**: Not suitable for real-time applications
+
+### Typical Latency Values
+
+- **CPU**: ~1-5 ms per prediction (200-1000 predictions/second)
+- **GPU**: ~0.5-2 ms per prediction (500-2000 predictions/second)
+- **End-to-end** (with preprocessing): ~2-6 ms
+
+For CubeSat applications, latency under 100 ms is typically acceptable for battery monitoring systems.
+
 ## 📝 Notes
 
 - The model uses synthetic data generated for demonstration purposes
@@ -357,6 +399,7 @@ seq_length = 15   # Longer sequences (in Cell 3)
 - The model performs best with normalized data (MinMaxScaler applied)
 - Regular retraining with new data is recommended for maintaining accuracy
 - Consider implementing real-time prediction pipelines for operational use
+- Measure latency to ensure the model meets real-time requirements for your specific hardware
 
 ## 🤝 Contributing
 

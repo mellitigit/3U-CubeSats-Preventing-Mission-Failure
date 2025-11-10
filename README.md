@@ -4,16 +4,153 @@
 
 ## ✅ Table of Contents
 
-1. [Summary](#1-summary)  
-2. [Problematic](#2-problematic)  
-3. [Solution Overview](#4-solution-overview)  
-4. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
-5. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
-6. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
-7. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
-8. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)  
-9. [Features (Schema Electric, Workflow)](#42-features)  
-10. [Impact](#43-impact)
+1. [Repository Structure](#repository-structure)
+2. [Summary](#1-summary)  
+3. [Problematic](#2-problematic)  
+4. [Solution Overview](#4-solution-overview)  
+5. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
+6. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
+7. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
+8. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
+9. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)  
+10. [Features (Schema Electric, Workflow)](#42-features)  
+11. [Impact](#43-impact)
+
+---
+
+# **0. Repository Structure & Organization**
+
+## Complete Directory Layout
+
+```
+3U-CubeSats-Preventing-Mission-Failure/          # Root repository
+│
+├── README.md                                      # Main project documentation
+├── .git/                                          # Git version control
+├── .gitignore                                     # Git ignore rules
+│
+├── 📁 battery health and thermal prediction for mission failure prevention/
+│   ├── train_gru_model.ipynb                      # GRU model training notebook
+│   ├── generate_data_prediction.py                # Synthetic data generator for battery
+│   ├── synthetic_battery_prediction_data.csv      # Generated training dataset (~12k rows)
+│   ├── best_gru_model.pth                         # Trained GRU model (best weights)
+│   ├── battery_gru_model.pth                      # Backup GRU model weights
+│   ├── scaler_X_gru.pkl                           # Input feature scaler (serialized)
+│   ├── scaler_y_gru.pkl                           # Output target scaler (serialized)
+│   ├── model_params_gru.pkl                       # Model architecture parameters
+│   ├── requirements.txt                           # Python dependencies
+│   ├── README.md                                  # Objective 3 documentation
+│   └── venv/                                      # Python virtual environment
+│
+├── 📁 CubeSat/                                    # Reinforcement Learning Module
+│   ├── cubesat.ipynb                              # Supervised tumbling detector training
+│   ├── rl-cubesat.ipynb                           # RL agent (SAC) training for detumbling
+│   ├── model_supervised.keras                     # Trained tumbling detector model
+│   ├── README.en.md                               # Documentation in English
+│   ├── requirements.txt                           # Python dependencies
+│   ├── sac_cubesat_policy.zip                     # Trained SAC policy model
+│   └── [checkpoints/, logs/ folders expected]     # Training artifacts (optional)
+│
+├── 📁 Data compressing/                           # Downlink & Adaptive Compression
+│   ├── 🔧 Core Scripts
+│   │   ├── train_XGBoost.py                       # XGBoost model training for compression
+│   │   ├── send_with_compression.py               # Main inference pipeline
+│   │   ├── compression_engine.py                  # Compression algorithm implementations
+│   │   ├── compression_selector.py                # Compression protocol selector logic
+│   │   ├── compression_settings.py                # Configuration & protocol settings
+│   │   ├── compressor.py                          # File compression wrapper
+│   │   ├── data_classifier.py                     # Data type classifier (image/text/binary)
+│   │   ├── data_generation.py                     # Synthetic pass data generator
+│   │   ├── extract_ts_features.py                 # Time-series feature extraction
+│   │   ├── merge_ts_into_aggregated.py            # Dataset aggregation & merging
+│   │   └── test.py                                # Unit tests
+│   │
+│   ├── 📊 Models & Outputs
+│   │   ├── xgboost_can_send_all_model.pkl         # Model: Payload transmission feasibility
+│   │   ├── xgboost_recommended_compression_ratio_model.pkl  # Model: Optimal compression ratio
+│   │   └── compressed_files.csv                   # Compression results log
+│   │
+│   ├── 📁 generated_dataset/                      # Simulated orbital pass data
+│   │   ├── aggregated_passes.csv                  # Main dataset (50k passes)
+│   │   ├── aggregated_passes_enriched.csv         # Enriched features for modeling
+│   │   ├── timeseries_passes_profiles.csv         # SNR/range/elevation time-series
+│   │   ├── timeseries_passes_meta.csv             # Metadata for time-series passes
+│   │   └── ts_features.csv                        # Extracted statistical features
+│   │
+│   └── 📁 test_files/                             # Test data for compression validation
+│       ├── 1.jpg, 22.png                          # Test images (JPEG/PNG)
+│       ├── telemetry.csv                          # Sample telemetry data
+│       ├── umath-validation-set-log10.csv         # Test CSV dataset
+│       ├── IT.1-10.cbow1...txt                    # NLP/embedding test file
+│       ├── test_data.csv                          # Generic test CSV
+│       ├── log.txt                                # Test text log
+│       ├── test_binary.bin, science_data.bin      # Binary test files
+│       ├── image_noeoi.lzw.bin                    # LZW-compressed image
+│       ├── *.lz4, *.zst                           # Compressed versions (LZ4, Zstandard)
+│       └── *.jpg_compressed.jpg                   # Compression artifacts
+│
+├── 📁 FDIR_VF/                                    # Fault Detection, Isolation & Recovery
+│   ├── 📁 anomaly_detection/                      # Binary fault detection
+│   │   ├── binary_anomaly_FDIR_dataset_balanced (1).csv  # Training dataset
+│   │   └── lgb_anomaly_model.pkl                  # LightGBM anomaly detector (95% accuracy)
+│   │
+│   └── 📁 anomaly_classfication/                  # Multi-class fault isolation
+│       ├── fault_type_FDIR_dataset_realistic.csv  # Fault classification dataset
+│       └── lgb_fault_type_current.pkl             # LightGBM fault classifier (95.75% accuracy)
+│
+└── 📁 power/                                      # Power Prediction Model
+    ├── 🔧 Core Scripts
+    │   ├── generate_enhanced_data.py              # Synthetic power data generator
+    │   ├── train_optimized_model.py               # XGBoost model training with hyperparameter tuning
+    │   └── test_single_prediction.ipynb           # Inference & validation notebook
+    │
+    ├── 📊 Models & Outputs
+    │   ├── xgboost_power_predictor_optimized.pkl  # Trained power prediction model
+    │   └── prediction_comparison.csv              # Model predictions vs ground truth
+    │
+    └── 📁 generated_data/                         # Simulated power dataset
+        └── sim_power_data_enhanced.csv            # Training/test dataset with 12 min forecasting
+```
+
+---
+
+## Directory Descriptions
+
+| Directory | Purpose | Key Files |
+|-----------|---------|-----------|
+| **battery health and thermal prediction/** | Battery state-of-health prediction using GRU neural network | `train_gru_model.ipynb`, `best_gru_model.pth` |
+| **CubeSat/** | Reinforcement learning agent for attitude control & detumbling | `rl-cubesat.ipynb`, `sac_cubesat_policy.zip` |
+| **Data compressing/** | Downlink optimization with adaptive compression selection | `train_XGBoost.py`, `send_with_compression.py` |
+| **FDIR_VF/** | Autonomous fault detection & isolation models | `lgb_anomaly_model.pkl`, `lgb_fault_type_current.pkl` |
+| **power/** | 12-minute ahead power availability forecasting | `train_optimized_model.py`, `xgboost_power_predictor_optimized.pkl` |
+
+---
+
+## File Organization by Type
+
+### 🔧 **Training Scripts** (Top-level in each module)
+- `train_gru_model.ipynb` → Battery model training
+- `train_XGBoost.py` → Compression model training
+- `train_optimized_model.py` → Power model training
+- `cubesat.ipynb` & `rl-cubesat.ipynb` → RL agent training
+
+### 📊 **Generated Datasets** (in `generated_dataset/` or `generated_data/`)
+- Orbital pass simulations (Objective 1)
+- Power profiles (Objective 2)
+- Battery telemetry (Objective 3)
+- Sensor fault data (Objective 4)
+
+### 🤖 **Trained Models** (`.pth`, `.pkl`, `.keras`, `.zip`)
+- `best_gru_model.pth` → Battery GRU
+- `xgboost_*.pkl` → Compression & power predictions
+- `lgb_*.pkl` → FDIR models
+- `model_supervised.keras` → Tumbling detector
+- `sac_cubesat_policy.zip` → RL policy
+
+### ✅ **Inference & Validation** (Notebooks & test scripts)
+- `test_single_prediction.ipynb` → Power inference demo
+- `send_with_compression.py` → Compression pipeline
+- `test.py` → Unit tests for compression
 
 ---
 
@@ -268,8 +405,8 @@ Using last 10 time steps of telemetry.
 
 | Metric | Temperature | Voltage | Current |
 |--------|-------------|---------|---------|
-| RMSE | 0.72°C | 0.047 V | 0.054 A |
-| R² | 0.98 | 0.97 | 0.91 |
+| RMSE | 0.7283°C | 0.047526 V | 0.054206 A |
+| R² | 0.9832 | 0.9741 | 0.9103 |
 
 ---
 
