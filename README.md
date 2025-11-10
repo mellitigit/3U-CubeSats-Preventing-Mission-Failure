@@ -224,14 +224,13 @@ Output: `sim_power_data_enhanced.csv`
 ---
 
 ## ✅ Repository Structure
-/generated_data/
-sim_power_data_enhanced.csv
-prediction_comparison.csv
+-generated_data/: Designated output directory for generated datasets (e.g., .csv files).
+-generate_enhanced_data.py: Python script for simulating and generating the training and -testing dataset (sim_power_data_enhanced.csv).
+-train_optimized_model.py: The main training script. It handles data loading, hyperparameter tuning, model training, evaluation, and serialization.
+-test_single_prediction.py: A demonstration script to load the trained model and make a single prediction on a simulated "current state" from the test data.
+-xgboost_power_predictor_optimized.pkl: (Output) The final, serialized XGBoost model artifact, ready for deployment.
+-prediction_comparison.csv: (Output) A CSV file comparing the model's predictions against the ground truth values on the test set.
 
-generate_enhanced_data.py
-train_optimized_model.py
-test_single_prediction.py
-xgboost_power_predictor_optimized.pkl
 
 
 
