@@ -414,7 +414,7 @@ Run `rl-cubesat.ipynb`
     /logs/
     training_curves.png
     evaluation_results.png
-```
+
 
 ## ✅ Model Performance
 
