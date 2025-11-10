@@ -39,7 +39,7 @@ These challenges highlight the need for **advanced onboard autonomy** for real-t
 This CubeSat system integrates **five AI-based objectives**:
 
 1. **Downlink Prediction & Adaptive Compression**  
-2. **Power Prediction **  
+2. Power Prediction  
 3. **Battery Health Prediction (Thermal & Electrical)**  
 4. **FDIR — Fault Detection, Isolation & Recovery**  
 5. **Detumbling & Attitude Stabilization using Reinforcement Learning**
