@@ -187,6 +187,11 @@ Predict net available power (W) at future time to:
 - Maintain safe energy margins  
 
 ---
+✅ Model Performance
+
+R² = 0.969 → high correlation between predicted and actual power
+
+RMSE = 2.07 W → small average prediction error
 
 ## ✅ Technical Stack
 
