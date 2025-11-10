@@ -416,8 +416,89 @@ Run `rl-cubesat.ipynb`
 
 ---
 
-# **3.2  Hardware/electronics design files**
-*(Schema electric, workflow diagram, workflow description — to be added)*
+# CubeSat Prototype — Hardware & Cost Breakdown (TND)
+
+This section summarizes the estimated cost and main components for the CubeSat prototype, including computing, communication, power, mechanical, and sensor subsystems.  
+All prices are approximate and expressed in **Tunisian Dinar (TND)**.
+
+---
+
+## Core Computing System (OBC + AI Processor)
+
+| Component | Price (TND) | Notes |
+|------------|--------------|-------|
+| Arduino Nano 33 BLE Sense | ~320 | Supervisor + telemetry |
+| Raspberry Pi 4 (or CM4) | ~240 | AI + onboard compression |
+| MicroSD 32 GB | ~35 | Storage / logging |
+| Industrial heatsinks | ~20 | Thermal stability |
+| **Subtotal** | **~615 TND** | |
+
+---
+
+## Communication Subsystem (Prototype)
+
+| Component | Price (TND) | Notes |
+|------------|--------------|-------|
+| LoRa SX1278 module | 35 | Tx/Rx prototyping |
+| LoRa SX1276 or RFM69HCW backup | 40 | Backup testing |
+| DIY deployable whip antenna | 30 | Steel tape + SMA cable |
+| NiChrome wire deployment | 20 | Burn-wire system |
+| **Subtotal** | **~125 TND** | |
+
+---
+
+## Power Subsystem (Prototype)
+
+| Component | Price (TND) | Notes |
+|------------|--------------|-------|
+| Li-ion 18650 cells (3S2P) | ~150 | BMS board |
+| MPPT (simple) | ~110 | Educational MPPT |
+| DC-DC step-down regulators | ~20 | 5V / 3.3V |
+| INA219 current/voltage sensor | 15 | Telemetry |
+| Solar panels (small, 10–20 W) | ~200 | Local small PV panels |
+| **Subtotal** | **~495 TND** | |
+
+---
+
+## Mechanical Structure + Thermal + ADCS
+
+| Component | Price (TND) | Notes |
+|------------|--------------|-------|
+| 3D printed CubeSat structure | ~80 | PLA or PETG |
+| Aluminum rails / hardware | ~40 | Mechanical reinforcement |
+| DIY magnetorquers | ~30 | Budget ADCS |
+| Sun sensors (photodiodes) | ~20 | Attitude sensing |
+| Thermal pads | ~20 | Heat transfer |
+| **Subtotal** | **~190 TND** | |
+
+---
+
+## Sensors & Additional Electronics
+
+| Component | Price (TND) | Notes |
+|------------|--------------|-------|
+| TMP177 high-accuracy temp sensor | 50 | Critical thermal monitoring |
+| MPU6050 IMU | 20 | Orientation tests |
+| HMC5883L magnetometer | 20 | Field sensing |
+| ADS1015 ADC | 55 | Extra analog telemetry |
+| Connectors, headers, wiring | 30 | Harness |
+| **Subtotal** | **~175 TND** | |
+
+---
+
+## Non-Hardware Costs
+
+| Item | Cost | Notes |
+|------|------|-------|
+| Software | Free | XGBoost, PyTorch, NumPy |
+| AI training | Free | Local laptop / Google Colab |
+
+---
+
+### 🔹 Estimated Total Hardware Cost: **≈ 1,600 TND**
+
+> ⚙️ *Note:* Prices are approximate, subject to availability and sourcing. Components are selected for educational prototype use, not flight-grade certification.
+
 
 ---
 
