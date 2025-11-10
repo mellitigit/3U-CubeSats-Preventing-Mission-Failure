@@ -1,4 +1,4 @@
-# 🚀 CubeSat Autonomous AI System — Full Project Documentation
+# 🚀 CubeSat Autonomous AI System - Full Project Documentation
 
 ---
 
