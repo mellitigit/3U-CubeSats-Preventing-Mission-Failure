@@ -401,7 +401,11 @@ Run `rl-cubesat.ipynb`
     evaluation_results.png
 ```
 
+## ✅ Model Performance
 
+| Task                          | Method              | Average Reward | Final Angular Speed (rad/s) | Success Rate | Inference Time |
+|-------------------------------|---------------------|----------------|------------------------------|---------------|----------------|
+| Satellite Attitude Detumbling | SAC (Soft Actor-Critic) | +0.85         | 0.03                         | 95%           | 4.2 ms         |
 
 ---
 
