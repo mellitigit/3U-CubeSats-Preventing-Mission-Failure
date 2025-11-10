@@ -6,14 +6,15 @@
 
 1. [Summary](#1-summary)  
 2. [Problematic](#2-problematic)  
-3. [Solution Overview](#4-solution-overview)
-        A. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
-        B. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
-        C. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
-        D. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
-        E. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)
-4. [CubeSat Prototype — Hardware & Cost Breakdown]
-5. [Impact](#43-impact)
+3. [Solution Overview](#3-solution-overview)
+
+   A. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
+   B. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
+   C. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
+   D. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
+   E. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)
+4. [CubeSat Prototype — Hardware & Cost Breakdown](#4-Hardware-&-Cost-Breakdown)
+5. [Impact](#5-impact)
 
 ---
 
@@ -63,7 +64,7 @@ This AI system predicts **available downlink capacity** for each pass and comput
 
 ---
 
-## ✅ Objective
+## ✅ Objective overview
 
 - Predict whether full payload can be sent  
 - Compute optimal compression ratio  
@@ -187,7 +188,7 @@ Predicts **T+12 min power availability** to secure payload operations and energy
 
 ---
 
-## ✅ Objective 
+## ✅ Objective overview
 
 Predict net available power (W) at future time to:
 
@@ -255,7 +256,7 @@ xgboost_power_predictor_optimized.pkl
 
 ---
 
-## ✅ Objective
+## ✅ Objective overview
 
 Predict next-step battery:
 - Temperature  
@@ -312,7 +313,7 @@ Using last 10 time steps of telemetry.
 
 ---
 
-## ✅ Objective
+## ✅ Objective overview
 
 Enable CubeSats to autonomously:
 
@@ -423,6 +424,7 @@ Run `rl-cubesat.ipynb`
 
 ```
 ## ✅ Electrical schematic
+
 <img width="597" height="485" alt="image" src="https://github.com/user-attachments/assets/34b9191e-3734-443c-8df3-9e9a1af22c3a" />
 
 ---
