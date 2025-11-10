@@ -269,8 +269,8 @@ Using last 10 time steps of telemetry.
 
 | Metric | Temperature | Voltage | Current |
 |--------|-------------|---------|---------|
-| RMSE | 0.73°C | 0.047 V | 0.054 A |
-| R² | High | High | High |
+| RMSE | 0.72°C | 0.047 V | 0.054 A |
+| R² | 0.98 | 0.97 | 0.91 |
 
 ---
 
