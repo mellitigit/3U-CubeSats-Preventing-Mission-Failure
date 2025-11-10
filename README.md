@@ -6,14 +6,14 @@
 
 1. [Summary](#1-summary)  
 2. [Problematic](#2-problematic)  
-3. [Solution Overview](#4-solution-overview)  
-4. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
-5. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
-6. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
-7. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
-8. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)  
-9. [Features (Schema Electric, Workflow)](#42-features)  
-10. [Impact](#43-impact)
+3. [Solution Overview](#4-solution-overview)
+        A. [Objective 1 — Downlink Prediction & Adaptive Compression](#objective-1-cubesat-ai-based-downlink-prediction--adaptive-compression)  
+        B. [Objective 2 — Power Prediction Model](#objective-2-cubesat-power-prediction-model)  
+        C. [Objective 3 — Battery Health Prediction (GRU)](#objective-3-cubesat-battery-health-prediction-model)  
+        D. [Objective 4 — AI-Based FDIR](#objective-4--ai-based-fdir-fault-detection-isolation--recovery-for-cubesats)  
+        E. [Objective 5 — Detumbling using Reinforcement Learning](#objective-5-detumbling-using-reinforcement-learning)
+4. [CubeSat Prototype — Hardware & Cost Breakdown]
+5. [Impact](#43-impact)
 
 ---
 
@@ -49,10 +49,11 @@ This CubeSat system integrates **five AI-based objectives**:
 1. **Downlink Prediction & Adaptive Compression**  
 2. Power Prediction  
 3. **Battery Health Prediction (Thermal & Electrical)**  
-4. **FDIR — Fault Detection, Isolation & Recovery**  
+4. **FDIR - Fault Detection, Isolation & Recovery**  
 5. **Detumbling & Attitude Stabilization using Reinforcement Learning**
 
 Each subsystem is independent yet complementary to enable a fully autonomous CubeSat mission.
+<img width="531" height="394" alt="image" src="https://github.com/user-attachments/assets/19a9dccb-d1dd-42f1-90e4-e0ef18215855" />
 
 ---
 
@@ -242,7 +243,9 @@ train_optimized_model.py
 test_single_prediction.py
 xgboost_power_predictor_optimized.pkl
 ```
+## ✅ Electrical schematic
 
+<img width="579" height="262" alt="image" src="https://github.com/user-attachments/assets/4c01825e-ff29-4589-b705-5d6b37c87868" />
 
 
 
@@ -299,8 +302,9 @@ Using last 10 time steps of telemetry.
     model_params_gru.pkl
     requirements.txt
 ```
+## ✅ Electrical schematic
 
-
+<img width="202" height="104" alt="image" src="https://github.com/user-attachments/assets/cebd2bb7-df30-4a24-988d-b832eccdb73f" />
 
 ---
 
@@ -360,6 +364,9 @@ Sliding windows of **10 samples** capture dynamic behavior.
       fault_isolation_model.pkl
 
 ```
+## ✅ Electrical schematic
+
+<img width="579" height="262" alt="image" src="https://github.com/user-attachments/assets/0842801c-831c-447d-8bbb-e6d4632c95d4" />
 
 ---
 
@@ -414,9 +421,13 @@ Run `rl-cubesat.ipynb`
 |-------------------------------|---------------------|----------------|------------------------------|---------------|----------------|
 | Satellite Attitude Detumbling | SAC (Soft Actor-Critic) | +0.85         | 0.03                         | 95%           | 4.2 ms         |
 
+```
+## ✅ Electrical schematic
+<img width="597" height="485" alt="image" src="https://github.com/user-attachments/assets/34b9191e-3734-443c-8df3-9e9a1af22c3a" />
+
 ---
 
-# CubeSat Prototype — Hardware & Cost Breakdown (TND)
+### ** 4.CubeSat Prototype — Hardware & Cost Breakdown (TND)**
 
 This section summarizes the estimated cost and main components for the CubeSat prototype, including computing, communication, power, mechanical, and sensor subsystems.  
 All prices are approximate and expressed in **Tunisian Dinar (TND)**.
@@ -502,7 +513,7 @@ All prices are approximate and expressed in **Tunisian Dinar (TND)**.
 
 ---
 
-# **3.3 Impact**
+# **5. Impact**
 
 The system enhances CubeSat autonomy, reliability, and mission longevity.  
 Power and battery prediction prevent energy failures.  
