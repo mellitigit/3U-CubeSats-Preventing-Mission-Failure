@@ -259,6 +259,7 @@ Using last 10 time steps of telemetry.
 
 ## ✅ Repository Structure
 
+```
 /prediction temp and volt/
 train_gru_model.ipynb
 generate_data_prediction.py
@@ -269,7 +270,7 @@ scaler_X_gru.pkl
 scaler_y_gru.pkl
 model_params_gru.pkl
 requirements.txt
-
+```
 
 
 ---
