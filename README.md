@@ -104,6 +104,18 @@ Synthetic datasets model:
 
 ---
 
+## ✅ Model Performance
+
+| Output | Description | R² Score |
+|--------|-------------|----------|
+| **can_send_all** | Predicts whether the CubeSat can transmit the full payload during the pass | **0.97** |
+| **recommended_compression_ratio** | Predicts the optimal compression level to apply to each data file | **0.98** |
+
+---
+
+
+---
+
 ## ✅ Onboard Compression Logic
 
 ### ✅ If data fits → **Transmit all**  
