@@ -225,7 +225,7 @@ Output: `sim_power_data_enhanced.csv`
 ---
 
 ## ✅ Repository Structure
-
+```
 /generated_data/
     sim_power_data_enhanced.csv
     prediction_comparison.csv
@@ -234,7 +234,7 @@ generate_enhanced_data.py
 train_optimized_model.py
 test_single_prediction.py
 xgboost_power_predictor_optimized.pkl
-
+```
 
 
 
