@@ -414,15 +414,16 @@ Using last 10 time steps of telemetry.
 
 
 /prediction temp and volt/
-train_gru_model.ipynb
-generate_data_prediction.py
-synthetic_battery_prediction_data.csv
-best_gru_model.pth
-battery_gru_model.pth
-scaler_X_gru.pkl
-scaler_y_gru.pkl
-model_params_gru.pkl
-requirements.txt
+    train_gru_model.ipynb
+    generate_data_prediction.py
+    synthetic_battery_prediction_data.csv
+    best_gru_model.pth
+    battery_gru_model.pth
+    scaler_X_gru.pkl
+    scaler_y_gru.pkl
+    model_params_gru.pkl
+    requirements.txt
+
 
 
 
