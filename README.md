@@ -62,6 +62,8 @@ Each subsystem is independent yet complementary to enable a fully autonomous Cub
 
 This AI system predicts **available downlink capacity** for each pass and computes the **compression ratio** required to send the full payload under real constraints.
 
+The pre-transmission data pipeline will be modified in the hamshield radio accordingly.
+
 ---
 
 ## ✅ Objective overview
@@ -186,6 +188,8 @@ python send_with_compressing.py
 
 Predicts **T+12 min power availability** to secure payload operations and energy safety.
 
+MOSFET switches will turn off certain systems according to expected future power supply.
+
 ---
 
 ## ✅ Objective overview
@@ -254,6 +258,8 @@ xgboost_power_predictor_optimized.pkl
 
 # ✅ **Objective 3: CubeSat Battery Health Prediction Model**
 
+MOSFET switches power off battery cells that are overheating or overcharging.
+
 ---
 
 ## ✅ Objective overview
@@ -310,6 +316,10 @@ Using last 10 time steps of telemetry.
 ---
 
 # ✅ **Objective 4: AI-Based FDIR (Fault Detection, Isolation & Recovery)**
+
+Maintains electronic systems health through detecting and addressing anomalous behaviour.
+
+An algorithm will determine if MOSFET switches will power off certain components and utilize redundancies or substitutary software solutions.
 
 ---
 
@@ -373,6 +383,12 @@ Sliding windows of **10 samples** capture dynamic behavior.
 
 # ✅ **Objective 5: Detumbling using Reinforcement Learning**
 
+Stabilizes the Cubesat and reduces its angular speed using minimal resources.
+It will utilize the reaction wheels and magnetorquers in a more optimized facet.
+
+---
+
+## ✅ Objective overview
 This module stabilizes CubeSat attitude by combining:
 
 - ✅ A supervised **tumbling detector model**  
